@@ -13,6 +13,6 @@ This portfolio is an exercise in brutalist minimalism and technical precision:
 By stripping away massive libraries like React or Tailwind, the site achieves instant load times, perfect accessibility scores, and pristine layout shifts.
 
 ### ⊙ Contact & Links
-* **Website**: *Pending Vercel Link*
+* **Website**: [https://protus-design-portfolio.vercel.app](https://protus-design-portfolio.vercel.app)
 * **Instagram**: [@dev.protus_ke](https://instagram.com/dev.protus_ke)
 * **Location**: Nairobi, Kenya
