@@ -915,7 +915,10 @@ function initContactForm() {
 
   if (!form || !feedback) return;
 
-  form.addEventListener('submit', (e) => {
+  // IMPORTANT: The placeholder below needs to be replaced with a real Formspree endpoint
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name = document.getElementById('name').value.trim();
@@ -932,18 +935,34 @@ function initContactForm() {
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending Envelope...";
 
-    setTimeout(() => {
-      feedback.style.color = 'var(--text-ink)';
-      feedback.textContent = `Thank you, ${name}. Your correspondence packet has been queued.`;
-      
-      // Clear fields
-      document.getElementById('name').value = '';
-      document.getElementById('email').value = '';
-      document.getElementById('msg').value = '';
-      
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, message: msg })
+      });
+
+      if (response.ok) {
+        feedback.style.color = 'var(--text-ink)';
+        feedback.textContent = `Thank you, ${name}. Your correspondence packet has been securely delivered.`;
+        
+        // Clear fields
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('msg').value = '';
+      } else {
+        throw new Error('Formspree rejected the request');
+      }
+    } catch (error) {
+      feedback.style.color = 'var(--accent-terracotta)';
+      feedback.textContent = "Transmission failed. Please ensure the Formspree ID is set up correctly.";
+    } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Send Correspondence";
-    }, 1500);
+    }
   });
 }
 
