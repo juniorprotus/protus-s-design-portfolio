@@ -2455,9 +2455,14 @@ footer {
   }
   
   /* Spec Board mobile optimizations */
+  .annotator-main {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
   .annotator-mock-canvas {
     padding: 1.5rem 1rem;
     border-right: none;
+    border-bottom: var(--border-hairline-dark);
   }
   .mock-interface {
     padding: 1.25rem;
